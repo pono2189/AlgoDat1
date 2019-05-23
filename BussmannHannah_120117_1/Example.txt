@@ -1,0 +1,82 @@
+
+
+public class Example {
+	public static void main (String[] args){
+		
+		Graph map = new Graph();
+		
+		City berlin = new City("Berlin", 3575000, "Berlin");
+		City braunschweig = new City("Braunschweig", 251364, "Niedersachsen");
+		City bremen = new City("Bremen", 557464, "Bremen");
+		City hannover = new City("Hannover", 532163, "Niedersachsen");
+		City leipzig = new City("Leipzig",560472, "Sachsen");
+		City muenchen = new City("Muenchen", 1450000, "Bayern");
+		City augsburg = new City("Augsburg",286374, "Bayern");
+		City nuernberg = new City("Nuernberg", 509975, "Bayern");
+		City erfurt = new City("Erfurt",210118, "Thueringen");
+		City frankfurt = new City("Frankfurt", 736414, "Hessen");
+		City stuttgart = new City("Stuttgart", 628032, "Baden-Wuerttemberg");
+		City mannheim = new City("Mannheim", 305780, "Baden-Wuerttemerg");
+		City freiburg = new City("Freiburg", 227590, "Baden-Wuertemberg");
+		City mainz = new City("Mainz", 209779, "Rheinland-Pfalz");
+		City koeln = new City("Koeln", 1061000, "Nordrhein-Westfalen");
+		City duesseldorf = new City("Duesseldorf", 612178, "Nordrhein-Westfalen");
+		City weimar = new City ("Weimar", 65542,"Thueringen");
+		City krefeld = new City("Krefeld", 225144, "Nordrhein-Westfalen");
+		City dortmund = new City("Dortmund", 585813, "Nordrhein-Westfalen");
+		City essen = new City("Essen", 582624, "Nordrhein-Westfalen");
+		City gotha = new City("Gotha", 45928, "Thueringen");
+		
+		map.addCity(berlin, braunschweig);
+		map.addCity(hannover, braunschweig);
+		map.addCity(leipzig, berlin);
+		map.addCity(braunschweig, bremen);
+		map.addCity(bremen, dortmund);
+		map.addCity(essen,dortmund);
+		map.addCity(dortmund, hannover);
+		map.addCity(duesseldorf, koeln);
+		map.addCity(koeln, krefeld);
+		map.addCity(krefeld, duesseldorf);
+		map.addCity(frankfurt, koeln);
+		map.addCity(mainz, koeln);
+		map.addCity(gotha, erfurt);
+		map.addCity(erfurt, leipzig);
+		map.addCity(weimar, leipzig);
+		map.addCity(nuernberg, weimar);
+		map.addCity(mannheim, mainz);
+		map.addCity(muenchen, freiburg);
+		map.addCity(augsburg, muenchen);
+		map.addCity(stuttgart, freiburg);
+		map.addCity(freiburg, mannheim);
+		map.addCity(freiburg, mannheim); //throws error because Freiburg already exists in the graph
+		
+		map.addConnection(essen, duesseldorf);
+		map.addConnection(mainz, frankfurt);
+		map.addConnection(frankfurt, gotha);
+		map.addConnection(nuernberg, augsburg);
+		map.addConnection(nuernberg, muenchen);
+		map.addConnection(nuernberg, frankfurt);
+		map.addConnection(nuernberg, stuttgart);
+		map.addConnection(frankfurt, mannheim);
+		map.addConnection(mannheim, stuttgart);
+		map.addConnection(augsburg, stuttgart); 
+		map.addConnection(augsburg, stuttgart); //throws error because there already is a direkt connection 
+												//between Augsburg & Stuttgart
+		
+		
+		map.removeCity(augsburg); //removes augsburg from the map
+		
+		System.out.println("direct connection Hannover: ");
+		hannover.printNeigh(); //prints Hannover's Neighbours
+		System.out.println();
+		hannover.printNode(); //prints Hannover's information
+		
+		System.out.println("Map of Germany: ");
+		System.out.println();
+		map.printGraph(); //prints whole map
+		
+		
+		
+		
+	}
+}

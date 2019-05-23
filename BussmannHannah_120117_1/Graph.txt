@@ -1,0 +1,73 @@
+import java.util.*;
+
+public class Graph {
+	
+	Map<String, City> graph = new HashMap<String, City>();
+	
+	public Graph(){
+		this.graph = new HashMap();
+	}
+	
+	public boolean doesNodeExist(City c){ //Sees if a City exists
+		for (Map.Entry<String, City> entry : graph.entrySet()) {
+			if (entry.getKey()==c.getName()){ //searches every entry of map 
+				return true;				  //and compares the key (also the name of the city) 
+			}                     			  // with the name of city c to see if c already exists
+		}
+		return false;
+	}
+	
+	public void addConnection(City start, City dest){ //adds a connection between two cities(start and dest)
+		if ((start.getNeighbours().contains(dest)== false )&&(dest.getNeighbours().contains(start)== false)){
+			start.addNeighbour(dest); 
+			dest.addNeighbour(start);
+		}
+	}
+
+	public void addCity(City c , City n){ //adds new city c with a direct connection to n
+		if(doesNodeExist(c) == false){
+				graph.put(c.getName(), c); //adds the new city c to the graph with its nameas the key
+				addConnection(c, n);
+		}	
+		else{
+			System.out.println("Error - The City " + c.getName() + " already exists!");
+		}
+	}	
+	
+	public City getCity(String name){
+		if(graph.containsKey(name)){
+			return graph.get(name); 
+		}
+		else{
+			return graph.get(name);
+		}
+	}
+	
+	public void removeCity(City c){
+		if (graph.containsKey(c.getName())){ //makes sure the City c exists in the graph
+			graph.remove(c.getName()); // deletes c from the graph
+			for (Map.Entry<String, City> entry : graph.entrySet()) { //itterates through the graph -> every city in it
+				ArrayList<Edge> edgesToDelete = new ArrayList<Edge>();
+				for (Edge e : entry.getValue().getNeighbours()){ //itterates through the list of direct connections of every city
+					
+					if ((c.getName().equals(e.getStart().getName()))||(c.getName().equals(e.getDestination().getName()))){
+						edgesToDelete.add(e);
+					}
+				}
+				entry.getValue().getNeighbours().remove(edgesToDelete);
+			}
+		}
+	}
+	
+	public void printGraph(){
+		for (Map.Entry<String, City> entry : graph.entrySet()) { //interrates through the whole graph and prints every entry(=every city and its information)
+			System.out.println(entry.getKey() + " " );
+			System.out.println("Population: " + entry.getValue().getPopulation()+ " " );
+			System.out.println("German State: " + entry.getValue().getState()+ " " );
+			entry.getValue().printNeigh();
+			System.out.println(" ");
+		}
+	}
+}
+
+

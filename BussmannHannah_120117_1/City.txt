@@ -1,0 +1,79 @@
+//These are the Nodes 
+import java.util.*;
+
+public class City {
+	private String name;
+	private int population;
+	private String state;
+	private ArrayList<Edge> neighbours = new ArrayList<Edge>();
+	
+	public City(String name) {
+		this.name = name;
+		this.population = 0;
+		this.state = " ";
+	}
+	
+	public City(String name, int population, String state) {
+		this.name = name;
+		this.population = population;
+		this.state = state;
+	}
+	
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public int getPopulation() {
+		return population;
+	}
+	public String getState() {
+		return state;
+	}
+	public void setPopulation(int population) {
+		this.population = population;
+	}
+	public ArrayList<Edge> getNeighbours() {
+		return neighbours;
+	}
+	
+	public int addNeighbour(City neigh){ //adds an edge between two cities 
+		for (int i = 0; i < neighbours.size(); i++){ //itterates through the list of neighbours of  this
+			if (neighbours.get(i).getDestination().getName().equals(neigh.getName())){
+				// checks if the name of neigh already exists in an edge as a destination
+				// -> checks if there already is a connection between the two cities
+				System.out.println("Error - " + neigh.getName() + " is already " + this.getName() + "'s neighbour ");
+				return -1;
+			}
+		}
+		Edge e = new Edge(this, neigh); 
+		neighbours.add(e); // adds the newly formed connection to the neighbour list
+		return 1;		
+	}
+
+	public void removeConnection(City c){ // removes an edge between two cities
+		for (int i = 0; i < getNeighbours().size(); i++){
+			Edge e = (Edge)getNeighbours().get(i); 
+			if (e.getStart().getName().equals(c.getName())){ // compares the Startcitie's name to c's name
+				neighbours.remove(i); 						 // and removes the connection if it exists
+			}
+		}
+	}
+
+	public void printNode(){ //prints one City only and its information
+		System.out.println("* " + name + "* ");
+		System.out.println("- Population:  " + population);
+		System.out.println("- State:  " + state);
+	}
+	
+	public void printNeigh(){ //prints all the cities with direct connections to the city that called the function
+		System.out.println("direct connections: ");
+		for (int i = 0; i < neighbours.size();i++){	
+			neighbours.get(i).getDestination().printNode();
+			
+		}
+	}
+}
+	
+
